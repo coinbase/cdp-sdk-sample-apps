@@ -17,10 +17,10 @@ export default function Home() {
     <div className="mb-16 max-w-4xl mx-auto bg-lavender-50 rounded-xl p-8 shadow-lg">
       <h2 className="text-2xl font-semibold mb-4 text-blue-600">What are CDP APIs?</h2>
       <p className="mb-4 text-gray-700">
-        Coinbase Developer Platform (CDP) APIs are Coinbase's backend and frontend suites of crypto services to easily build onchain apps.
+        Coinbase Developer Platform (CDP) APIs are backend and frontend suites of crypto services to easily build onchain apps.
       </p>
       <p className="mb-4 text-gray-700">
-        CDP SDK is the backend SDK for these APIs to:
+        CDP SDK is the backend SDK for these APIs that enables you to:
       </p>
       <ul className="space-y-3">
         <li className="flex items-center text-gray-700">
