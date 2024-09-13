@@ -4,19 +4,21 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-  <div className={`min-h-screen bg-gradient-to-br from-white to-lavender-100 text-gray-800 ${inter.className}`}>
+  <div className={`min-h-screen bg-white text-gray-800 ${inter.className}`}>
 
   <main className="container mx-auto px-4 py-20">
-    <h1 className="text-6xl font-semibold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-      CDP SDK Sample Apps
+    <h1 className="text-5xl md:text-6xl font-semibold text-center mb-8">
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+        CDP SDK Sample Apps
+      </span>
     </h1>
 
     <p className="text-xl text-center mb-16 max-w-3xl mx-auto text-gray-600">
       Explore our powerful sample applications and unlock the full potential of CDP SDK.
     </p>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-      {[
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-4xl mx-auto">
+    {[
         { 
           name: 'Lending App', 
           route: '/aave',
@@ -31,6 +33,11 @@ export default function Home() {
           name: 'Trading Bot', 
           route: 'https://github.com/coinbase/tg-trading-bot',
           description: 'Discover automated trading strategies implemented with CDP SDK on Telegram.'
+        },
+        { 
+          name: 'Automated Payouts', 
+          route: 'https://masspayoutsdemo.com/',
+          description: 'Automate mass payments for free on Base with Transfer APIs on CDP SDK'
         }
       ].map((app, index) => (
         <div key={index} className="bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-lavender-200">
@@ -38,8 +45,7 @@ export default function Home() {
           <p className="mb-8 text-gray-600">{app.description}</p>
           <a 
             href={app.route} 
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 transition-colors"
-            {...(app.name !== 'Lending App' ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            className="inline-block bg-gradient-to-r from-lavender-400 to-blue-500 text-white px-6 py-3 rounded-full font-medium hover:from-lavender-500 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl"            {...(app.name !== 'Lending App' ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           >
             View Demo
           </a>
@@ -50,7 +56,7 @@ export default function Home() {
     <div className="mt-24 text-center">
       <a 
         href="https://docs.cdp.coinbase.com/mpc-wallet/docs/quickstart" 
-        className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-5 rounded-full font-bold text-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl"
+        className="inline-block bg-gradient-to-r from-lavender-400 to-lavender-600 text-white px-10 py-5 rounded-full font-bold text-xl hover:from-lavender-500 hover:to-lavender-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl"
         target="_blank"
         rel="noopener noreferrer"
       >
