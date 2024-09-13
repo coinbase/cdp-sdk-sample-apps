@@ -6,11 +6,6 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-  title: 'CDP SDK Sample Apps',
-  description: 'Explore powerful sample applications built with CDP SDK',
-}
-
 export default function RootLayout({
   children,
 }: {
@@ -35,12 +30,12 @@ export default function RootLayout({
                   </a>
                 </li>
                 <li>
-                  <a href="https://github.com/coinbase/cdp-sdk-aave-sample" className="text-gray-700 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/coinbase/coinbase-sdk-nodejs" className="text-gray-700 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
                     <FaGithub size={24} />
                   </a>
                 </li>
                 <li>
-                  <a href="https://discord.gg/coinbasedevelopers" className="text-gray-700 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
+                  <a href="https://discord.gg/cdp" className="text-gray-700 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer">
                     <FaDiscord size={24} />
                   </a>
                 </li>
