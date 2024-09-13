@@ -228,9 +228,9 @@ export async function POST(request: Request) {
 async function importWallet(): Promise<Wallet>{
     const { CDP_API_KEY_NAME, CDP_API_PRIVATE_KEY, WALLET_DATA } = process.env;
 
-    const apiKeyString = process.env.CDP_API_KEY_PRIVATE_KEY as string;
+    const apiKeyString = CDP_API_PRIVATE_KEY as string;
 
-    const coinbase = new Coinbase({
+    new Coinbase({
         apiKeyName: CDP_API_KEY_NAME as string,
         privateKey: apiKeyString.replaceAll("\\n", "\n") as string,
     });

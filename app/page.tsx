@@ -1,11 +1,6 @@
-import { Inter, Poppins } from 'next/font/google'
-import Image from 'next/image'
-import Link from 'next/link';
-import Head from 'next/head'
-import { FaGithub, FaDiscord, FaFileAlt } from 'react-icons/fa'
+import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
-const poppins = Poppins({ weight: ['400', '600', '700'], subsets: ['latin'] })
 
 export default function Home() {
   return (

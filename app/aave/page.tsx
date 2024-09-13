@@ -6,9 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import Image from 'next/image';
-import { FaGithub, FaDiscord, FaFileAlt } from 'react-icons/fa';
-import Link from 'next/link';
 
 export default function AaveInteraction() {
     const [accountData, setAccountData] = useState<any>(null);
