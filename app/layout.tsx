@@ -22,7 +22,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={inter.className}>
-        <div className="min-h-screen bg-gradient-to-br from-white to-lavender-100 text-gray-800">
+        <div className="min-h-screen bg-white text-gray-800">
           <header className="py-6 px-4 bg-white shadow-md">
             <nav className="container mx-auto flex justify-between items-center">
               <Link href="/">

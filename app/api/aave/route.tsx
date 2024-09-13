@@ -226,9 +226,9 @@ export async function POST(request: Request) {
 
 // importWallet imports the CDP wallet from the environment variables.
 async function importWallet(): Promise<Wallet>{
-    const { CDP_API_KEY_NAME, CDP_API_PRIVATE_KEY, WALLET_DATA } = process.env;
+    const { CDP_API_KEY_NAME, CDP_API_KEY_PRIVATE_KEY, WALLET_DATA } = process.env;
 
-    const apiKeyString = CDP_API_PRIVATE_KEY as string;
+    const apiKeyString = CDP_API_KEY_PRIVATE_KEY as string;
 
     new Coinbase({
         apiKeyName: CDP_API_KEY_NAME as string,
