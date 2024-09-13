@@ -107,7 +107,7 @@ export default function AaveInteraction() {
                             <li>MPC Wallets and CDP SDK for seamless, user-first onchain DeFi experiences</li>
                             <li>Customizable, accessible DeFi with global reach, low fees, and instant transactions</li>
                             <li>AI code assistants for quick frontend creation of onchain DeFi apps</li>
-                            <li>Easily extend the app's repo with layout changes and DeFi smart contract integration</li>
+                            <li>Easily extend the app with layout changes and DeFi smart contract integration</li>
                             </ul>
                             <p className="text-sm text-gray-600">Note: This app uses testnet USDC</p>
                         </CardContent>
