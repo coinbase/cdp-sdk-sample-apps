@@ -1,3 +1,15 @@
+# CDP SDK Sample Applications
+
+This project demonstrate various use cases of CDP (Coinbase Developer Platform) SDK. This app showcases how to integrate and leverage key features of the SDK in different real-world scenarios, helping you to accelerate web3 development.
+
+Each example is designed to be modular, providing clear insights into how you can implement specific functionalities. Whether you’re new to the SDK or looking for advanced use cases, this app serves as a practical guide to help you get started quickly and efficiently.
+
+The project contains the following demo applications built with CDP SDK
+
+1. **Lending App**: Explore Aave integration with CDP SDK for decentralized lending and borrowing.
+2. **Onchain AI**: The Onchain AI template provides a simple app for Reinforcement Learning from Human Feedback using the CDP SDK.
+3. **Trading bot**: Discover automated trading strategies implemented with CDP SDK on Telegram.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
