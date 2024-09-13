@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google'
+import { FaWallet, FaDatabase, FaExchangeAlt, FaLaptopCode } from 'react-icons/fa'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -9,13 +10,37 @@ export default function Home() {
   <main className="container mx-auto px-4 py-20">
     <h1 className="text-5xl md:text-6xl font-semibold text-center mb-8">
       <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-        CDP SDK Sample Apps
+        CDP SDK Demo Apps
       </span>
     </h1>
 
-    <p className="text-xl text-center mb-16 max-w-3xl mx-auto text-gray-600">
-      Explore our powerful sample applications and unlock the full potential of CDP SDK.
-    </p>
+    <div className="mb-16 max-w-4xl mx-auto bg-lavender-50 rounded-xl p-8 shadow-lg">
+      <h2 className="text-2xl font-semibold mb-4 text-blue-600">What are CDP APIs?</h2>
+      <p className="mb-4 text-gray-700">
+        Coinbase Developer Platform (CDP) APIs are backend and frontend suites of crypto services to easily build onchain apps.
+      </p>
+      <p className="mb-4 text-gray-700">
+        CDP SDK is the backend SDK for these APIs that enables you to:
+      </p>
+      <ul className="space-y-3">
+        <li className="flex items-center text-gray-700">
+          <FaWallet className="mr-3 text-blue-500" />
+          <span>Build programmable MPC wallets for developers</span>
+        </li>
+        <li className="flex items-center text-gray-700">
+          <FaDatabase className="mr-3 text-blue-500" />
+          <span>Accessing onchain data and using testnet faucets</span>
+        </li>
+        <li className="flex items-center text-gray-700">
+          <FaExchangeAlt className="mr-3 text-blue-500" />
+          <span>Leveraging crypto functions like send, receive, trade, stake</span>
+        </li>
+        <li className="flex items-center text-gray-700">
+          <FaLaptopCode className="mr-3 text-blue-500" />
+          <span>Seamless onchain interactions from your developer wallets</span>
+        </li>
+      </ul>
+    </div>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-4xl mx-auto">
     {[
@@ -37,7 +62,7 @@ export default function Home() {
         { 
           name: 'Automated Payouts', 
           route: 'https://masspayoutsdemo.com/',
-          description: 'Automate mass payments for free on Base with Transfer APIs on CDP SDK'
+          description: 'Automate mass payments for free on Base with Transfer APIs on CDP SDK.'
         }
       ].map((app, index) => (
         <div key={index} className="bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-lavender-200">
