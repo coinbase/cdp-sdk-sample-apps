@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 
 export default function AaveInteraction() {
+    const [showIntro, setShowIntro] = useState(true);
     const [accountData, setAccountData] = useState<any>(null);
     const [supplyAmount, setSupplyAmount] = useState<string>('');
     const [borrowAmount, setBorrowAmount] = useState<string>('');
@@ -84,17 +85,50 @@ export default function AaveInteraction() {
         }
     };
 
+    const closeIntro = () => {
+        setShowIntro(false);
+    };
+
     useEffect(() => {
         getUserAccountData();
     }, []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-white to-lavender-100 text-gray-800">
-
+        <div className="min-h-screen bg-white text-gray-800 relative">
+            {showIntro && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <Card className="w-full max-w-3xl bg-white shadow-xl">
+                        <CardHeader>
+                            <CardTitle className="text-2xl text-blue-600">Welcome to USDCFlow</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="mb-4">USDCFlow is a lending App on Base-Sepolia that showcases:</p>
+                            <ul className="list-disc list-inside text-gray-700 mb-4">
+                            <li>MPC Wallets and CDP SDK for seamless, user-first onchain DeFi experiences</li>
+                            <li>Customizable, accessible DeFi with global reach, low fees, and instant transactions</li>
+                            <li>AI code assistants for quick frontend creation of onchain DeFi apps</li>
+                            <li>Easily extend the app with layout changes and DeFi smart contract integration</li>
+                            </ul>
+                            <p className="text-sm text-gray-600">Note: This app uses testnet USDC</p>
+                        </CardContent>
+                        <CardFooter className="flex justify-end">
+                            <Button 
+                                onClick={closeIntro}
+                                className="bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300"
+                            >
+                                Next
+                            </Button>
+                        </CardFooter>
+                    </Card>
+                </div>
+            )}
             <div className="container mx-auto px-4 py-12">
-                <h1 className="text-4xl font-semibold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                    Aave V3 Interaction on Base Sepolia
+                <h1 className="text-4xl font-semibold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                    USDCFlow
                 </h1>
+                <p className="text-lg font-small text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-lavender-400 to-blue-500">
+                    USDC DeFi Demo App
+                </p>
 
                 {isLoading ? (
                     <div className="flex justify-center items-center h-64">
@@ -102,22 +136,26 @@ export default function AaveInteraction() {
                     </div>
                 ) : (
                     <>
-                        {accountData && (
-                            <Card className="mb-8 bg-white shadow-lg">
-                                <CardHeader>
-                                    <CardTitle className="text-2xl text-blue-600">Account Overview</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p className="mb-2">Wallet Address: {accountData.walletAddress}</p>
-                                    <p>Wallet Balance: {parseFloat(accountData.usdcBalance).toFixed(2)} USDC</p>
-                                </CardContent>
-                            </Card>
-                        )}
-
+                        <Card className="mb-8 bg-lavender-50 shadow-lg">
+                            <CardHeader>
+                                <CardTitle className="text-xl text-blue-600"> Features</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="mb-2">This demo app allow you to:</p>
+                                <ul className="list-disc list-inside text-gray-700">
+                                    <li>Borrow and lend USDC effortlessly with USDCFlow, the all-in-one USDC platform</li>
+                                    <li>Competitive rates, no credit checks, and instant access to USDC</li>
+                                    <li>Earn attractive yields on your idle USDC holdings with our user-friendly lending platform</li>
+                                    <li>Seamless, secure, and intuitive experience for borrowing and lending</li>
+                                </ul>
+                            </CardContent>
+                            <CardFooter>
+                                <p className="text-sm text-gray-600">Note: This app uses testnet USDC. Make sure you have Base Sepolia USDC in your wallet.</p>
+                            </CardFooter>
+                        </Card>
                         <Card className="mb-8 bg-white shadow-lg">
                             <CardHeader>
-                                <CardTitle className="text-2xl text-blue-600">Aave Lending Pool</CardTitle>
-                                <CardDescription>Interact with Aave lending pool</CardDescription>
+                                <CardTitle className="text-xl text-blue-600">Account overview</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 {error && (
@@ -131,11 +169,11 @@ export default function AaveInteraction() {
                                 </Button>                        
                                 {accountData && (
                                 <div className="bg-lavender-50 p-4 rounded-lg">
-                                    <h3 className="text-lg font-semibold mb-2 text-blue-600">Account Data:</h3>
+                                    <p className="mb-1">Wallet Address: {accountData.walletAddress}</p>
+                                    <p className="mb-1">Wallet Balance: {parseFloat(accountData.usdcBalance).toFixed(2)} USDC</p>
                                     <p className="mb-1">Total Deposited: {accountData.totalDeposited} USDC</p>
                                     <p className="mb-1">Total Debt: {accountData.totalDebtBase} USDC</p>
                                     <p className="mb-1">Available to borrow: {accountData.availableBorrowsBase} USDC</p>
-                                    <p>Health Factor: {accountData.healthFactor}</p>
                                 </div>
                                 )}
                             </CardContent>
@@ -144,7 +182,7 @@ export default function AaveInteraction() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <Card className="bg-white shadow-lg">
                                 <CardHeader>
-                                    <CardTitle className="text-2xl text-blue-600">Supply Assets</CardTitle>
+                                    <CardTitle className="text-xl text-blue-600">Supply Assets</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <Input
@@ -172,7 +210,7 @@ export default function AaveInteraction() {
 
                             <Card className="bg-white shadow-lg">
                                 <CardHeader>
-                                    <CardTitle className="text-2xl text-blue-600">Borrow Assets</CardTitle>
+                                    <CardTitle className="text-xl text-blue-600">Borrow Assets</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <Input
