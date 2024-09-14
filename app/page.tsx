@@ -46,7 +46,7 @@ export default function Home() {
     {[
         { 
           name: 'Lending App', 
-          route: '/aave',
+          route: '/usdcflow',
           description: 'Explore Aave integration with CDP SDK for decentralized lending and borrowing.'
         },
         { 
