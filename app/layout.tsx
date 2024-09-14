@@ -45,6 +45,20 @@ export default function RootLayout({
           <main>
             {children}
           </main>
+          <footer className="py-10 text-center text-gray-600 bg-white mt-20 border-t border-lavender-200">
+        <p>&copy; 2024 CDP SDK. All rights reserved.</p>
+        <p>
+          By using this app, you agree to the{' '}
+          <a 
+            href="https://www.coinbase.com/legal/cloud/terms-of-service"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-800 underline"
+          >
+            Terms of Service
+          </a>
+        </p>
+      </footer>
         </div>
       </body>
     </html>

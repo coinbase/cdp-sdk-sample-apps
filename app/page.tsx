@@ -89,10 +89,6 @@ export default function Home() {
       </a>
     </div>
   </main>
-      
-  <footer className="py-10 text-center text-gray-600 bg-white mt-20 border-t border-lavender-200">
-    <p>&copy; 2024 CDP SDK. All rights reserved.</p>
-  </footer>
 </div>
   );
 }
