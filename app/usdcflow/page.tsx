@@ -116,7 +116,7 @@ export default function AaveInteraction() {
                                 onClick={closeIntro}
                                 className="bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300"
                             >
-                                Next
+                                Take me to the app!
                             </Button>
                         </CardFooter>
                     </Card>
