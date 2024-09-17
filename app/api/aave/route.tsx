@@ -221,6 +221,58 @@ export async function POST(request: Request) {
         }
     }
 
+    if (action === 'repay') {
+        try {
+            const amountToRepay = parseUnits(amount, 6);
+
+            // First, approve USDC spend
+            const approveContract = await wallet.invokeContract({
+                contractAddress: USDC_ADDRESS,
+                method: "approve",
+                args: {
+                    spender: AAVE_POOL_ADDRESS,
+                    value: amountToRepay.toString()
+                },
+                abi: usdcAbi,
+            });
+
+            const approveTx = await approveContract.wait();
+            if (!approveTx) {
+                throw new Error('Failed to approve USDC spend');
+            }
+
+            console.log('USDC spend approved for repayment:', approveTx);
+
+            // Now, repay the loan
+            const repayContract = await wallet.invokeContract({
+                contractAddress: AAVE_POOL_ADDRESS,
+                method: "repay",
+                args: {
+                    asset: USDC_ADDRESS,
+                    amount: amountToRepay.toString(),
+                    interestRateMode: "2",
+                    onBehalfOf: address.getId()
+                },
+                abi: aaveAbi,
+            });
+
+            const repayTx = await repayContract.wait();
+            if (!repayTx) {
+                throw new Error('Failed to repay USDC to Aave');
+            }
+
+            console.log('USDC repaid to Aave:', repayTx);
+
+            return NextResponse.json({success: true, txHash: repayTx.getTransactionHash()});
+        } catch (error) {
+            console.error('Failed to repay loan:', error);
+            return NextResponse.json({
+                error: 'Failed to repay loan',
+                details: error instanceof Error ? error.message : String(error)
+            }, {status: 500});
+        }
+    }
+
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
 }
 

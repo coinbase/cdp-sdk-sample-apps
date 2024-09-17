@@ -12,17 +12,21 @@ export default function AaveInteraction() {
     const [accountData, setAccountData] = useState<any>(null);
     const [supplyAmount, setSupplyAmount] = useState<string>('');
     const [borrowAmount, setBorrowAmount] = useState<string>('');
+    const [repayAmount, setRepayAmount] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isSupplying, setIsSupplying] = useState<boolean>(false);
     const [isBorrowing, setIsBorrowing] = useState<boolean>(false);
+    const [isRepaying, setIsRepaying] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
     const [supplyOutput, setSupplyOutput] = useState<{ amount: string, txHash: string } | null>(null);
     const [borrowOutput, setBorrowOutput] = useState<{ amount: string, txHash: string } | null>(null);
+    const [repayOutput, setRepayOutput] = useState<{ amount: string, txHash: string } | null>(null);
 
     const clearTransactionData = () => {
         setSupplyOutput(null);
         setBorrowOutput(null);
+        setRepayOutput(null);
         setError('');
     };
 
@@ -82,6 +86,28 @@ export default function AaveInteraction() {
             setError('Failed to borrow assets. Please try again.');
         } finally {
             setIsBorrowing(false);
+        }
+    };
+
+    const repayToAave = async () => {
+        if (!repayAmount) return;
+        clearTransactionData();
+        setIsRepaying(true);
+        try {
+            const response = await fetch('/api/aave', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({action: 'repay', amount: repayAmount}),
+            });
+            if (!response.ok) throw new Error('Failed to repay loan');
+            const data = await response.json();
+            setRepayOutput({ amount: repayAmount, txHash: data.txHash });
+            getUserAccountData(); 
+        } catch (err) {
+            console.error('Failed to repay loan:', err);
+            setError('Failed to repay loan. Please try again.');
+        } finally {
+            setIsRepaying(false);
         }
     };
 
@@ -164,15 +190,15 @@ export default function AaveInteraction() {
                                         <AlertDescription>{error}</AlertDescription>
                                     </Alert>
                                 )}
-                                <Button onClick={getUserAccountData} className="mb-4 bg-blue-600 hover:bg-blue-700 text-white">
-                                    Refresh Account Data
+                                <Button onClick={getUserAccountData} className="mb-4 bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
+                                        Refresh Account Data
                                 </Button>                        
                                 {accountData && (
                                 <div className="bg-lavender-50 p-4 rounded-lg">
                                     <p className="mb-1">Wallet Address: {accountData.walletAddress}</p>
                                     <p className="mb-1">Wallet Balance: {parseFloat(accountData.usdcBalance).toFixed(2)} USDC</p>
-                                    <p className="mb-1">Total Deposited: {accountData.totalDeposited} USDC</p>
-                                    <p className="mb-1">Total Debt: {accountData.totalDebtBase} USDC</p>
+                                    <p className="mb-1">Total Supplied: {accountData.totalDeposited} USDC</p>
+                                    <p className="mb-1">Total Borrowed: {accountData.totalDebtBase} USDC</p>
                                     <p className="mb-1">Available to borrow: {accountData.availableBorrowsBase} USDC</p>
                                 </div>
                                 )}
@@ -195,7 +221,7 @@ export default function AaveInteraction() {
                                         }}
                                         className="mb-4"
                                     />
-                                    <Button onClick={supplyToAave} disabled={isSupplying} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                                    <Button onClick={supplyToAave} disabled={isSupplying}                                         className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
                                         {isSupplying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                         Supply to Aave
                                     </Button>
@@ -220,7 +246,7 @@ export default function AaveInteraction() {
                                         onChange={(e) => setBorrowAmount(e.target.value)}
                                         className="mb-4"
                                     />
-                                    <Button onClick={borrowFromAave} disabled={isBorrowing} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                                    <Button onClick={borrowFromAave} disabled={isBorrowing}                                         className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
                                         {isBorrowing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                         Borrow from Aave
                                     </Button>
@@ -232,6 +258,36 @@ export default function AaveInteraction() {
                                     </CardFooter>
                                 )}
                             </Card>
+                        
+                            <Card className="bg-white shadow-lg">
+                                <CardHeader>
+                                    <CardTitle className="text-xl text-blue-600">Repay Loan</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <Input
+                                        type="number"
+                                        placeholder="Amount to repay (USDC)"
+                                        value={repayAmount}
+                                        onChange={(e) => setRepayAmount(e.target.value)}
+                                        className="mb-4"
+                                    />
+                                    <Button 
+                                        onClick={repayToAave} 
+                                        disabled={isRepaying} 
+                                        className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300"
+                                    >
+                                        {isRepaying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                        Repay Loan
+                                    </Button>
+                                </CardContent>
+                                {repayOutput && (
+                                    <CardFooter className="flex flex-col items-start">
+                                        <p className="mb-2">Repaid Amount: {repayOutput.amount} USDC</p>
+                                        <p>Transaction Hash: {repayOutput.txHash}</p>
+                                    </CardFooter>
+                                )}
+                            </Card>
+
                         </div>
                     </>
                 )}
