@@ -15,7 +15,7 @@ export default function Home() {
     </h1>
 
     <div className="mb-16 max-w-4xl mx-auto bg-lavender-50 rounded-xl p-8 shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4 text-blue-600">What are CDP APIs?</h2>
+    <h2 className="text-2xl font-semibold mb-4 text-blue-600">What are CDP APIs?</h2>
       <p className="mb-4 text-gray-700">
         Coinbase Developer Platform (CDP) APIs are backend and frontend suites of crypto services to easily build onchain apps.
       </p>
@@ -42,38 +42,55 @@ export default function Home() {
       </ul>
     </div>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-4xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
     {[
-        { 
-          name: 'Lending App', 
-          route: '/usdcflow',
-          description: 'Explore Aave integration with CDP SDK for decentralized lending and borrowing.'
-        },
+        // {
+        //   name: 'USDC Lending App',
+        //   route: '/usdcflow',
+        //   description: 'Explore Aave integration with CDP SDK for decentralized lending and borrowing.',
+        //   buildLink: 'https://docs.cdp.coinbase.com/mpc-wallet/docs/aave-integration'
+        // },
         { 
           name: 'Onchain AI', 
           route: 'https://aiwalletdemo.com/',
-          description: 'The Onchain AI template provides a simple app for Reinforcement Learning from Human Feedback using the CDP SDK.'
+          description: 'The Onchain AI template provides a simple app for Reinforcement Learning from Human Feedback using the CDP SDK.',
+          buildLink: 'https://replit.com/@CoinbaseDev/Onchain-Machine-Learning?v=1#README.md'
         },
         { 
           name: 'Trading Bot', 
           route: 'https://github.com/coinbase/tg-trading-bot',
-          description: 'Discover automated trading strategies implemented with CDP SDK on Telegram.'
+          description: 'Discover automated trading strategies implemented with CDP SDK on Telegram.',
+          buildLink: 'https://replit.com/@CoinbaseDev/Onchain-Trading-Bot#README.md'
         },
         { 
           name: 'Automated Payouts', 
           route: 'https://masspayoutsdemo.com/',
-          description: 'Automate mass payments for free on Base with Transfer APIs on CDP SDK.'
+          description: 'Automate mass payments for free on Base with Transfer APIs on CDP SDK.',
+          buildLink: 'https://replit.com/@CoinbaseDev/Onchain-Payments?v=1#README.md'
         }
       ].map((app, index) => (
-        <div key={index} className="bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-lavender-200">
+        <div key={index} className="bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-lavender-200 flex flex-col h-full">
+        <div className="flex-grow">
           <h2 className="text-xl font-medium mb-4 text-blue-600">{app.name}</h2>
           <p className="mb-8 text-gray-600">{app.description}</p>
-          <a 
-            href={app.route} 
-            className="inline-block bg-gradient-to-r from-lavender-400 to-blue-500 text-white px-6 py-3 rounded-full font-medium hover:from-lavender-500 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl"            {...(app.name !== 'Lending App' ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          >
-            View Demo
-          </a>
+        </div>
+        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-auto">
+            <a 
+              href={app.route} 
+              className="inline-block bg-gradient-to-r from-lavender-400 to-blue-500 text-white px-6 py-3 rounded-full font-medium hover:from-lavender-500 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl text-center"
+              {...(app.name !== 'Lending App' ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            >
+              Demo
+            </a>
+            <a 
+              href={app.buildLink} 
+              className="inline-block bg-gradient-to-r from-lavender-400 to-blue-500 text-white px-6 py-3 rounded-full font-medium hover:from-lavender-500 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl text-center"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Build Your Own
+            </a>
+          </div>
         </div>
       ))}
     </div>
