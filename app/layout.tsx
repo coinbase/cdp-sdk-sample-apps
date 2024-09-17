@@ -16,7 +16,7 @@ export const metadata = {
     siteName: 'CDP SDK Demos',
     images: [
       {
-        url: '/logo.png',
+        url: '/cdp-sample-apps.png',
         width: 1200,
         height: 630,
         alt: 'CDP SDK Demo Apps',
@@ -29,7 +29,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'CDP SDK Demo Apps',
     description: 'Explore demo applications built with CDP (Coinbase Developer Platform) SDK.',
-    images: ['/logo.png'],
+    images: ['/cdp-sample-apps.png'],
   },
 }
 
