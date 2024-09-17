@@ -273,6 +273,44 @@ export async function POST(request: Request) {
         }
     }
 
+    if (action === 'withdraw') {
+        try {
+            const amountToWithdraw = parseUnits(amount, 6); // Assuming USDC has 6 decimals
+
+            console.log('Attempting to withdraw:', {
+                asset: USDC_ADDRESS,
+                amount: amountToWithdraw.toString(),
+                to: address.getId()
+            });
+
+            const withdrawContract = await wallet.invokeContract({
+                contractAddress: AAVE_POOL_ADDRESS,
+                method: "withdraw",
+                args: {
+                    asset: USDC_ADDRESS,
+                    amount: amountToWithdraw.toString(),
+                    to: address.getId()
+                },
+                abi: aaveAbi,
+            });
+
+            const withdrawTx = await withdrawContract.wait();
+            if (!withdrawTx) {
+                throw new Error('Failed to withdraw USDC from Aave');
+            }
+
+            console.log('Withdraw transaction sent, hash:', withdrawTx.getTransactionHash());
+
+            return NextResponse.json({ success: true, txHash: withdrawTx.getTransactionHash() });
+        } catch (error) {
+            console.error('Failed to withdraw:', error);
+            return NextResponse.json({
+                error: 'Failed to withdraw',
+                details: error instanceof Error ? error.message : String(error)
+            }, { status: 500 });
+        }
+    }
+
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
 }
 

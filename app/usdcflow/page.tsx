@@ -13,20 +13,24 @@ export default function AaveInteraction() {
     const [supplyAmount, setSupplyAmount] = useState<string>('');
     const [borrowAmount, setBorrowAmount] = useState<string>('');
     const [repayAmount, setRepayAmount] = useState<string>('');
+    const [withdrawAmount, setWithdrawAmount] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isSupplying, setIsSupplying] = useState<boolean>(false);
     const [isBorrowing, setIsBorrowing] = useState<boolean>(false);
     const [isRepaying, setIsRepaying] = useState<boolean>(false);
+    const [isWithdrawing, setIsWithdrawing] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
     const [supplyOutput, setSupplyOutput] = useState<{ amount: string, txHash: string } | null>(null);
     const [borrowOutput, setBorrowOutput] = useState<{ amount: string, txHash: string } | null>(null);
     const [repayOutput, setRepayOutput] = useState<{ amount: string, txHash: string } | null>(null);
+    const [withdrawOutput, setWithdrawOutput] = useState<{ amount: string, txHash: string } | null>(null);
 
     const clearTransactionData = () => {
         setSupplyOutput(null);
         setBorrowOutput(null);
         setRepayOutput(null);
+        setWithdrawOutput(null);
         setError('');
     };
 
@@ -110,6 +114,29 @@ export default function AaveInteraction() {
             setIsRepaying(false);
         }
     };
+
+    const withdrawFromAave = async () => {
+        if (!withdrawAmount) return;
+        clearTransactionData();
+        setIsWithdrawing(true);
+        try {
+            const response = await fetch('/api/aave', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({action: 'withdraw', amount: withdrawAmount}),
+            });
+            if (!response.ok) throw new Error('Failed to withdraw assets');
+            const data = await response.json();
+            setWithdrawOutput({ amount: withdrawAmount, txHash: data.txHash });
+            getUserAccountData(); 
+        } catch (err) {
+            console.error('Failed to withdraw from Aave:', err);
+            setError('Failed to withdraw assets. Please try again.');
+        } finally {
+            setIsWithdrawing(false);
+        }
+    };
+
 
     const closeIntro = () => {
         setShowIntro(false);
@@ -205,8 +232,8 @@ export default function AaveInteraction() {
                             </CardContent>
                         </Card>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <Card className="bg-white shadow-lg">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">      
+                               <Card className="bg-white shadow-lg">
                                 <CardHeader>
                                     <CardTitle className="text-xl text-blue-600">Supply Assets</CardTitle>
                                 </CardHeader>
@@ -287,7 +314,31 @@ export default function AaveInteraction() {
                                     </CardFooter>
                                 )}
                             </Card>
-
+                            <Card className="bg-white shadow-lg">
+                                <CardHeader>
+                                    <CardTitle className="text-xl text-blue-600">Withdraw Assets</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <Input
+                                        type="number"
+                                        placeholder="Amount to withdraw (USDC)"
+                                        value={withdrawAmount}
+                                        onChange={(e) => setWithdrawAmount(e.target.value)}
+                                        className="mb-4"
+                                    />
+                                    <Button onClick={withdrawFromAave} disabled={isWithdrawing}
+                                        className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
+                                        {isWithdrawing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                        Withdraw from Aave
+                                    </Button>
+                                </CardContent>
+                                {withdrawOutput && (
+                                    <CardFooter className="flex flex-col items-start">
+                                        <p className="mb-2">Withdrawn Amount: {withdrawOutput.amount} USDC</p>
+                                        <p className="text-sm break-all">Transaction Hash: {withdrawOutput.txHash}</p>
+                                    </CardFooter>
+                                )}
+                            </Card>
                         </div>
                     </>
                 )}
