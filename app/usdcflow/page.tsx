@@ -250,7 +250,7 @@ export default function AaveInteraction() {
                                     />
                                     <Button onClick={supplyToAave} disabled={isSupplying}                                         className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
                                         {isSupplying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        Supply to Aave
+                                        Supply Assets
                                     </Button>
                                 </CardContent>
                                 {supplyOutput && (
@@ -275,7 +275,7 @@ export default function AaveInteraction() {
                                     />
                                     <Button onClick={borrowFromAave} disabled={isBorrowing}                                         className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
                                         {isBorrowing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        Borrow from Aave
+                                        Borrow Assets
                                     </Button>
                                 </CardContent>
                                 {borrowOutput && (
@@ -288,7 +288,7 @@ export default function AaveInteraction() {
                         
                             <Card className="bg-white shadow-lg">
                                 <CardHeader>
-                                    <CardTitle className="text-xl text-blue-600">Repay Loan</CardTitle>
+                                    <CardTitle className="text-xl text-blue-600">Repay Assets</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <Input
@@ -304,7 +304,7 @@ export default function AaveInteraction() {
                                         className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300"
                                     >
                                         {isRepaying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        Repay Loan
+                                        Repay Assets
                                     </Button>
                                 </CardContent>
                                 {repayOutput && (
@@ -329,7 +329,7 @@ export default function AaveInteraction() {
                                     <Button onClick={withdrawFromAave} disabled={isWithdrawing}
                                         className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
                                         {isWithdrawing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        Withdraw from Aave
+                                        Withdraw Assets
                                     </Button>
                                 </CardContent>
                                 {withdrawOutput && (
