@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FaGithub, FaDiscord, FaLightbulb } from 'react-icons/fa'
 import './globals.css'
+import Head from 'next/head'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -43,6 +44,16 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
+      <Head>
+        <meta property="og:title" content="CDP SDK Demo Apps" />
+        <meta property="og:description" content="Explore demo applications built with CDP (Coinbase Developer Platform) SDK." />
+        <meta property="og:image" content="/logo.png" />
+        <meta property="og:url" content="https://cdpsdk.xyz" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="CDP SDK Demo Apps" />
+        <meta name="twitter:description" content="Explore demo applications built with CDP (Coinbase Developer Platform) SDK." />
+        <meta name="twitter:image" content="/logo.png" />
+   </Head>
       <body className={inter.className}>
         <div className="min-h-screen bg-white text-gray-800">
           <header className="py-6 px-4 bg-white shadow-md">
