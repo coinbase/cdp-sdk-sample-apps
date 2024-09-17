@@ -6,7 +6,7 @@ Each example is designed to be modular, providing clear insights into how you ca
 
 The project contains the following demo applications built with CDP SDK
 
-1. **Lending App**: Explore Aave integration with CDP SDK for decentralized lending and borrowing.
+1. **Lending App**: Explore how to use CDP SDK for decentralized lending and borrowing.
 2. **Onchain AI**: The Onchain AI template provides a simple app for Reinforcement Learning from Human Feedback using the CDP SDK.
 3. **Trading bot**: Discover automated trading strategies implemented with CDP SDK on Telegram.
 4. **Mass Payouts demo**: Automate mass payouts in crypto with zero gas fee with Transfers API on CDP SDK.
