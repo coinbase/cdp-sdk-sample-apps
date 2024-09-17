@@ -6,6 +6,33 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
+export const metadata = {
+  title: 'CDP SDK Demo Apps',
+  description: 'Explore demo applications built with CDP (Coinbase Developer Platform) SDK.',
+  openGraph: {
+    title: 'CDP SDK Demo Apps',
+    description: 'Explore demo applications built with CDP (Coinbase Developer Platform) SDK.',
+    url: 'https://cdpsdk.xyz',
+    siteName: 'CDP SDK Demos',
+    images: [
+      {
+        url: '/cdp-sample-apps.png',
+        width: 1200,
+        height: 630,
+        alt: 'CDP SDK Demo Apps',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CDP SDK Demo Apps',
+    description: 'Explore demo applications built with CDP (Coinbase Developer Platform) SDK.',
+    images: ['/cdp-sample-apps.png'],
+  },
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -46,19 +73,19 @@ export default function RootLayout({
             {children}
           </main>
           <footer className="py-10 text-center text-gray-600 bg-white mt-20 border-t border-lavender-200">
-        <p>&copy; 2024 CDP SDK. All rights reserved.</p>
-        <p>
-          By using this app, you agree to the{' '}
-          <a 
-            href="https://www.coinbase.com/legal/cloud/terms-of-service"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800 underline"
-          >
-            Terms of Service
-          </a>
-        </p>
-      </footer>
+            <p>&copy; 2024 CDP SDK. All rights reserved.</p>
+            <p>
+              By using this app, you agree to the{' '}
+              <a 
+                href="https://www.coinbase.com/legal/cloud/terms-of-service"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 underline"
+              >
+                Terms of Service
+              </a>
+            </p>
+          </footer>
         </div>
       </body>
     </html>
