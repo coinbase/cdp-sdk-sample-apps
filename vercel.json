@@ -8,8 +8,7 @@
           "value": "usdcflow.xyz"
         }
       ],
-      "destination": "https://www.cdp-sdk.xyz/usdcflow",
-      "permanent": false
+      "destination": "https://www.cdp-sdk.xyz/usdcflow"
     }
   ]
 }
