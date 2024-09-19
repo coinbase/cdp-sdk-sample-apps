@@ -42,14 +42,14 @@ export default function Home() {
       </ul>
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
     {[
-        // {
-        //   name: 'USDC Lending App',
-        //   route: '/usdcflow',
-        //   description: 'Explore Aave integration with CDP SDK for decentralized lending and borrowing.',
-        //   buildLink: 'https://docs.cdp.coinbase.com/mpc-wallet/docs/aave-integration'
-        // },
+        {
+          name: 'USDC Lending App',
+          route: '/usdcflow',
+          description: 'Explore a simple app that uses CDP SDK for decentralized lending and borrowing.',
+          buildLink: 'https://docs.cdp.coinbase.com/mpc-wallet/docs/aave-integration'
+        },
         { 
           name: 'Onchain AI', 
           route: 'https://aiwalletdemo.com/',
@@ -74,17 +74,18 @@ export default function Home() {
           <h2 className="text-xl font-medium mb-4 text-blue-600">{app.name}</h2>
           <p className="mb-8 text-gray-600">{app.description}</p>
         </div>
-        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-auto">
+        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-auto">
             <a 
               href={app.route} 
-              className="inline-block bg-gradient-to-r from-lavender-400 to-blue-500 text-white px-6 py-3 rounded-full font-medium hover:from-lavender-500 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl text-center"
-              {...(app.name !== 'Lending App' ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="inline-block bg-gradient-to-r from-lavender-400 to-blue-500 text-white px-6 py-3 rounded-full font-medium hover:from-lavender-500 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl text-center w-full sm:w-auto"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Demo
             </a>
             <a 
               href={app.buildLink} 
-              className="inline-block bg-gradient-to-r from-lavender-400 to-blue-500 text-white px-6 py-3 rounded-full font-medium hover:from-lavender-500 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl text-center"
+              className="inline-block bg-gradient-to-r from-lavender-400 to-blue-500 text-white px-6 py-3 rounded-full font-medium hover:from-lavender-500 hover:to-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl text-center w-full sm:w-auto"
               target="_blank"
               rel="noopener noreferrer"
             >
