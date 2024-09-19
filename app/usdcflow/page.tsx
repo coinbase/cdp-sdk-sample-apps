@@ -62,7 +62,7 @@ export default function AaveInteraction() {
             if (!response.ok) throw new Error('Failed to supply assets');
             const data = await response.json();
             setSupplyOutput({ amount: supplyAmount, txHash: data.txHash });
-            getUserAccountData(); 
+            getUserAccountData();
         } catch (err) {
             console.error('Failed to supply to Aave:', err);
             setError('Failed to supply assets. Please try again.');
@@ -84,7 +84,7 @@ export default function AaveInteraction() {
             if (!response.ok) throw new Error('Failed to borrow assets');
             const data = await response.json();
             setBorrowOutput({ amount: borrowAmount, txHash: data.txHash });
-            getUserAccountData(); 
+            getUserAccountData();
         } catch (err) {
             console.error('Failed to borrow to Aave:', err);
             setError('Failed to borrow assets. Please try again.');
@@ -106,7 +106,7 @@ export default function AaveInteraction() {
             if (!response.ok) throw new Error('Failed to repay loan');
             const data = await response.json();
             setRepayOutput({ amount: repayAmount, txHash: data.txHash });
-            getUserAccountData(); 
+            getUserAccountData();
         } catch (err) {
             console.error('Failed to repay loan:', err);
             setError('Failed to repay loan. Please try again.');
@@ -128,7 +128,7 @@ export default function AaveInteraction() {
             if (!response.ok) throw new Error('Failed to withdraw assets');
             const data = await response.json();
             setWithdrawOutput({ amount: withdrawAmount, txHash: data.txHash });
-            getUserAccountData(); 
+            getUserAccountData();
         } catch (err) {
             console.error('Failed to withdraw from Aave:', err);
             setError('Failed to withdraw assets. Please try again.');
@@ -157,15 +157,14 @@ export default function AaveInteraction() {
                         <CardContent>
                             <p className="mb-4">USDCFlow is a lending App on Base-Sepolia that showcases:</p>
                             <ul className="list-disc list-inside text-gray-700 mb-4">
-                            <li>MPC Wallets and CDP SDK for seamless, user-first onchain DeFi experiences</li>
-                            <li>Customizable, accessible DeFi with global reach, low fees, and instant transactions</li>
-                            <li>AI code assistants for quick frontend creation of onchain DeFi apps</li>
-                            <li>Easily extend the app with layout changes and DeFi smart contract integration</li>
+                                <li>MPC Wallets and CDP SDK for seamless, user-first onchain DeFi experiences</li>
+                                <li>Customizable, accessible DeFi with global reach, low fees, and instant transactions</li>
+                                <li>Easily extend the app with layout changes and DeFi smart contract integration</li>
                             </ul>
                             <p className="text-sm text-gray-600">Note: This app uses testnet USDC</p>
                         </CardContent>
                         <CardFooter className="flex justify-end">
-                            <Button 
+                            <Button
                                 onClick={closeIntro}
                                 className="bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300"
                             >
@@ -218,22 +217,22 @@ export default function AaveInteraction() {
                                     </Alert>
                                 )}
                                 <Button onClick={getUserAccountData} className="mb-4 bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
-                                        Refresh Account Data
-                                </Button>                        
+                                    Refresh Account Data
+                                </Button>
                                 {accountData && (
-                                <div className="bg-lavender-50 p-4 rounded-lg">
-                                    <p className="mb-1">Wallet Address: {accountData.walletAddress}</p>
-                                    <p className="mb-1">Wallet Balance: {parseFloat(accountData.usdcBalance).toFixed(2)} USDC</p>
-                                    <p className="mb-1">Total Supplied: {accountData.totalDeposited} USDC</p>
-                                    <p className="mb-1">Total Borrowed: {accountData.totalDebtBase} USDC</p>
-                                    <p className="mb-1">Available to borrow: {accountData.availableBorrowsBase} USDC</p>
-                                </div>
+                                    <div className="bg-lavender-50 p-4 rounded-lg">
+                                        <p className="mb-1">Wallet Address: {accountData.walletAddress}</p>
+                                        <p className="mb-1">Wallet Balance: {parseFloat(accountData.usdcBalance).toFixed(3)} USDC</p>
+                                        <p className="mb-1">Total Supplied: {accountData.totalDeposited} USDC</p>
+                                        <p className="mb-1">Total Borrowed: {accountData.totalDebtBase} USDC</p>
+                                        <p className="mb-1">Available to borrow: {accountData.availableBorrowsBase} USDC</p>
+                                    </div>
                                 )}
                             </CardContent>
                         </Card>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">      
-                               <Card className="bg-white shadow-lg">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <Card className="bg-white shadow-lg">
                                 <CardHeader>
                                     <CardTitle className="text-xl text-blue-600">Supply Assets</CardTitle>
                                 </CardHeader>
@@ -285,7 +284,7 @@ export default function AaveInteraction() {
                                     </CardFooter>
                                 )}
                             </Card>
-                        
+
                             <Card className="bg-white shadow-lg">
                                 <CardHeader>
                                     <CardTitle className="text-xl text-blue-600">Repay Assets</CardTitle>
@@ -298,9 +297,9 @@ export default function AaveInteraction() {
                                         onChange={(e) => setRepayAmount(e.target.value)}
                                         className="mb-4"
                                     />
-                                    <Button 
-                                        onClick={repayToAave} 
-                                        disabled={isRepaying} 
+                                    <Button
+                                        onClick={repayToAave}
+                                        disabled={isRepaying}
                                         className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300"
                                     >
                                         {isRepaying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -327,7 +326,7 @@ export default function AaveInteraction() {
                                         className="mb-4"
                                     />
                                     <Button onClick={withdrawFromAave} disabled={isWithdrawing}
-                                        className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
+                                            className="w-full bg-gradient-to-r from-lavender-400 to-blue-500 hover:from-lavender-500 hover:to-blue-600 text-white transition-all duration-300">
                                         {isWithdrawing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                         Withdraw Assets
                                     </Button>

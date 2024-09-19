@@ -52,7 +52,7 @@ async function getUserAccountData(address: string) {
         console.log("address ", address)
 
         return {
-            totalCollateralBase: data[0],  // This is the user's total deposited amount
+            totalCollateralBase: data[0],
             totalDebtBase: data[1],
             availableBorrowsBase: data[2],
             currentLiquidationThreshold: data[3],
@@ -320,7 +320,7 @@ async function importWallet(): Promise<Wallet>{
 
     const apiKeyString = CDP_API_KEY_PRIVATE_KEY as string;
 
-    new Coinbase({
+    Coinbase.configure({
         apiKeyName: CDP_API_KEY_NAME as string,
         privateKey: apiKeyString.replaceAll("\\n", "\n") as string,
     });
@@ -328,6 +328,30 @@ async function importWallet(): Promise<Wallet>{
     try {
         // Parse the wallet data
         const seedData = JSON.parse(WALLET_DATA || "{}");
+
+        if (Object.keys(seedData).length === 0) {
+            // Create a new wallet if WALLET_DATA is empty
+            const newWallet = await Wallet.create();
+
+            // Fund the wallet with USDC
+            let faucetTransaction = await newWallet.faucet(Coinbase.assets.Usdc);
+            console.log(`Faucet transaction for USDC: ${faucetTransaction}`);
+
+            // Fund the wallet with ETH.
+            faucetTransaction = await newWallet.faucet();
+            console.log(`Faucet transaction for ETH: ${faucetTransaction}`);
+
+            let exportData = await newWallet.export()
+
+            // Create and assign the new WALLET_DATA
+            const newWalletData =JSON.stringify({ [exportData['walletId'] as string]: { 'seed': exportData['seed'] as string } });
+
+            console.log(`Created new wallet: ${exportData['walletId']}`)
+
+            process.env.WALLET_DATA = newWalletData;
+
+            return newWallet;
+        }
 
         // Get the wallet id
         const walletId = Object.keys(seedData)[0];
