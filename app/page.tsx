@@ -48,7 +48,7 @@ export default function Home() {
           name: 'USDC Lending App',
           route: '/usdcflow',
           description: 'Explore a simple app that uses CDP SDK for decentralized lending and borrowing.',
-          buildLink: 'https://docs.cdp.coinbase.com/mpc-wallet/docs/aave-integration'
+          buildLink: 'https://replit.com/@CoinbaseDev/Onchain-Lending#README.md'
         },
         { 
           name: 'Onchain AI', 
