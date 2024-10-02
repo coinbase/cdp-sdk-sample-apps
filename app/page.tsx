@@ -44,6 +44,12 @@ export default function Home() {
 
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
     {[
+        { 
+          name: 'USDC Payments App', 
+          route: 'https://www.myusdc.app/',
+          description: 'Send testnet USDC to any address in a familiar banking interface',
+          buildLink: 'https://github.com/HeimLabs/coinbase-myusdc-backend'
+        },
         {
           name: 'USDC Lending App',
           route: '/usdcflow',
