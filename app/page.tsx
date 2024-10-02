@@ -48,7 +48,7 @@ export default function Home() {
           name: 'USDC Payments App', 
           route: 'https://www.myusdc.app/',
           description: 'Send testnet USDC to any address in a familiar banking interface',
-          buildLink: 'https://discord.gg/cdp'
+          buildLink: 'https://github.com/HeimLabs/coinbase-myusdc-backend'
         },
         {
           name: 'USDC Lending App',
