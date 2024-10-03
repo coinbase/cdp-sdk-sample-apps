@@ -1,14 +1,19 @@
 {
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/:path*",
+      "source": "/",
+      "destination": "/usdcflow",
+      "statusCode": 301,
       "has": [
+        {
+            "type": "host",
+            "value": "www.usdcflow.xyz"
+        },
         {
           "type": "host",
           "value": "usdcflow.xyz"
         }
-      ],
-      "destination": "/usdcflow/:path*"
+      ]
     }
   ]
 }
