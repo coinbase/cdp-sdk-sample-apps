@@ -1,14 +1,14 @@
 {
   "rewrites": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "usdcflow.xyz"
         }
       ],
-      "destination": "https://www.cdp-sdk.xyz/usdcflow"
+      "destination": "/usdcflow/$1"
     }
   ]
 }
