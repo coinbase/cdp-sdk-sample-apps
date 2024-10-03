@@ -1,14 +1,14 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "usdcflow.xyz"
         }
       ],
-      "destination": "/usdcflow/$1"
+      "destination": "/usdcflow/:path*"
     }
   ]
 }
