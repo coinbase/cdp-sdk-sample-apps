@@ -45,6 +45,12 @@ export default function Home() {
     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
     {[
         { 
+          name: 'Wallet Command center', 
+          route: 'https://www.walletcommandcenter.com/',
+          description: 'Wallet Command center to manage your MPC wallets',
+          buildLink: 'https://vercel.com/templates/next.js/wallet-dashboard-with-coinbase-developer-platform'
+        },
+        { 
           name: 'USDC Payments App', 
           route: 'https://www.myusdc.app/',
           description: 'Send testnet USDC to any address in a familiar banking interface',
