@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { baseSepolia } from 'viem/chains';
 import aaveAbi from './aave_v3_abi.json';
 import usdcAbi from './usdc_abi.json';
+import '@/lib/coinbase';
 
 import {
     createPublicClient,
@@ -10,7 +11,7 @@ import {
     parseUnits,
     formatUnits
 } from 'viem';
-import {Coinbase, Wallet} from "@coinbase/coinbase-sdk";
+import { Coinbase, Wallet } from "@coinbase/coinbase-sdk";
 
 const AAVE_POOL_ADDRESS = '0x07eA79F68B2B3df564D0A34F8e19D9B1e339814b';
 const USDC_ADDRESS = '0x036CbD53842c5426634e7929541eC2318f3dCF7e';
@@ -263,13 +264,13 @@ export async function POST(request: Request) {
 
             console.log('USDC repaid to Aave:', repayTx);
 
-            return NextResponse.json({success: true, txHash: repayTx.getTransactionHash()});
+            return NextResponse.json({ success: true, txHash: repayTx.getTransactionHash() });
         } catch (error) {
             console.error('Failed to repay loan:', error);
             return NextResponse.json({
                 error: 'Failed to repay loan',
                 details: error instanceof Error ? error.message : String(error)
-            }, {status: 500});
+            }, { status: 500 });
         }
     }
 
@@ -315,15 +316,8 @@ export async function POST(request: Request) {
 }
 
 // importWallet imports the CDP wallet from the environment variables.
-async function importWallet(): Promise<Wallet>{
-    const { CDP_API_KEY_NAME, CDP_API_KEY_PRIVATE_KEY, WALLET_DATA } = process.env;
-
-    const apiKeyString = CDP_API_KEY_PRIVATE_KEY as string;
-
-    Coinbase.configure({
-        apiKeyName: CDP_API_KEY_NAME as string,
-        privateKey: apiKeyString.replaceAll("\\n", "\n") as string,
-    });
+async function importWallet(): Promise<Wallet> {
+    const { WALLET_DATA } = process.env;
 
     try {
         // Parse the wallet data
@@ -344,7 +338,7 @@ async function importWallet(): Promise<Wallet>{
             let exportData = await newWallet.export()
 
             // Create and assign the new WALLET_DATA
-            const newWalletData =JSON.stringify({ [exportData['walletId'] as string]: { 'seed': exportData['seed'] as string } });
+            const newWalletData = JSON.stringify({ [exportData['walletId'] as string]: { 'seed': exportData['seed'] as string } });
 
             console.log(`Created new wallet: ${exportData['walletId']}`)
 
