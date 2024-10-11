@@ -36,6 +36,8 @@ const Modal: React.FC<ModalProps> = ({
       setIsAnimating(false);
       setIsMinting(false);
       setIsMintSuccessful(false);
+      setTransferComplete(false);
+      setTransferTxUrl('');
     }
   }, [isOpen]);
 
