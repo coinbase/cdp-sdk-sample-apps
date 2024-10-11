@@ -1,5 +1,6 @@
 import { importWallet } from '@/lib/coinbase';
 import '@/lib/coinbase';
+import { deployContract } from '@/scripts/deployContract';
 import { NextResponse } from 'next/server';
 
 export type MintResponse = {
@@ -19,6 +20,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Network ID is required' }, { status: 400 });
   }
 
+  let contractAddress: string;
+  if (!process.env.NFT_CONTRACT_ADDRESS!) {
+    const multiToken = await deployContract();
+    contractAddress = multiToken.getContractAddress();
+  } else {
+    contractAddress = process.env.NFT_CONTRACT_ADDRESS!;
+  }
+
   let mintResponse: MintResponse;
 
   try {
@@ -33,7 +42,7 @@ export async function POST(request: Request) {
 
     const defaultAddress = await wallet.getDefaultAddress();
     const mintTx = await wallet.invokeContract({
-      contractAddress: process.env.NFT_CONTRACT_ADDRESS || "",
+      contractAddress: contractAddress,
       method: "mint",
       args: {
         to: defaultAddress.getId(),

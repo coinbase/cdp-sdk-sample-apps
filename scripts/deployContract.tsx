@@ -1,17 +1,9 @@
 // Usage: npx tsx scripts/deployContract.tsx
 
-console.log('Starting contract deployment process');
-
-import dotenv from 'dotenv';
-
-const loadResult = dotenv.config(); // Load environment variables
-if (loadResult.error) {
-  throw loadResult.error;
-}
-
 import { importWallet } from '@/lib/coinbase';
+import { SmartContract } from '@coinbase/coinbase-sdk';
 
-async function deployContract() {
+export async function deployContract(): Promise<SmartContract> {
   console.log('Starting contract deployment process');
 
   try {
@@ -32,6 +24,7 @@ async function deployContract() {
     console.log(`Deploy Transaction Hash: ${multiToken.getTransaction().getTransactionHash()}`);
     console.log(`Deploy Transaction URL: ${multiToken.getTransaction().getTransactionLink()}`);
 
+    return multiToken;
   } catch (error) {
     console.error('Error during contract deployment process:', error);
     process.exit(1);
