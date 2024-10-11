@@ -11,7 +11,6 @@ import {
     parseUnits,
     formatUnits
 } from 'viem';
-import { Coinbase, Wallet } from "@coinbase/coinbase-sdk";
 
 const AAVE_POOL_ADDRESS = '0x07eA79F68B2B3df564D0A34F8e19D9B1e339814b';
 const USDC_ADDRESS = '0x036CbD53842c5426634e7929541eC2318f3dCF7e';

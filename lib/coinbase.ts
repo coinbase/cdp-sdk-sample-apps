@@ -56,14 +56,14 @@ export async function importWallet(minEthBalance: number = 0, minUsdcBalance: nu
 
     // Maybe fund the wallet with USDC
     const currentUsdcBalance = await wallet.getBalance(Coinbase.assets.Usdc);
-    if (currentUsdcBalance.lessThanOrEqualTo(minUsdcBalance)) {
+    if (currentUsdcBalance.lessThan(minUsdcBalance)) {
       let faucetTransaction = await wallet.faucet(Coinbase.assets.Usdc);
       console.log(`Faucet transaction for USDC: ${faucetTransaction}`);
     }
 
     // Maybe fund the wallet with ETH.
     const currentEthBalance = await wallet.getBalance(Coinbase.assets.Eth);
-    if (currentEthBalance.lessThanOrEqualTo(minEthBalance)) {
+    if (currentEthBalance.lessThan(minEthBalance)) {
       let faucetTransaction = await wallet.faucet();
       console.log(`Faucet transaction for ETH: ${faucetTransaction}`);
     }

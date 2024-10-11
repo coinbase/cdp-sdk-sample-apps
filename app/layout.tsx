@@ -76,7 +76,7 @@ export default function RootLayout({
             <p>&copy; 2024 CDP SDK. All rights reserved.</p>
             <p>
               By using this app, you agree to the{' '}
-              <a 
+              <a
                 href="https://www.coinbase.com/legal/cloud/terms-of-service"
                 target="_blank"
                 rel="noopener noreferrer"
