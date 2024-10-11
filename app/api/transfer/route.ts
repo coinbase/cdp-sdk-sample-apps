@@ -44,6 +44,6 @@ export async function POST(request: Request) {
     return NextResponse.json(transferResponse);
   } catch (error) {
     console.error('Error during NFT transfer process:', error);
-    return NextResponse.json({ error: 'Failed to transfer NFT' }, { status: 500 });
+    return NextResponse.json({ error: `Failed to transfer NFT: ${error}` }, { status: 500 });
   }
 }
