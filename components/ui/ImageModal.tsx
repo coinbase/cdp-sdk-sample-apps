@@ -26,6 +26,7 @@ const Modal: React.FC<ModalProps> = ({
   const [isTransferring, setIsTransferring] = useState(false);
   const [transferComplete, setTransferComplete] = useState(false);
   const [recipientAddress, setRecipientAddress] = useState('');
+  const [transferTxUrl, setTransferTxUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -106,6 +107,7 @@ const Modal: React.FC<ModalProps> = ({
       .then(data => {
         console.log('Transfer response:', data);
         setTransferComplete(true);
+        setTransferTxUrl(data.txUrl); // Store the transaction URL
       })
       .catch(error => {
         console.error('Error during transfer:', error);
@@ -214,10 +216,21 @@ const Modal: React.FC<ModalProps> = ({
           )}
           {transferComplete && (
             <div className={styles.transferComplete}>
-              Transferred to{' '}
-              <span className={styles.recipientAddress}>
-                {recipientAddress}
-              </span>
+              {transferTxUrl ? (
+                <a href={transferTxUrl} target="_blank" rel="noopener noreferrer" className={styles.transferLink}>
+                  Transferred to{' '}
+                  <span className={styles.recipientAddress}>
+                    {recipientAddress}
+                  </span>
+                </a>
+              ) : (
+                <>
+                  Transferred to{' '}
+                  <span className={styles.recipientAddress}>
+                    {recipientAddress}
+                  </span>
+                </>
+              )}
             </div>
           )}
         </div>

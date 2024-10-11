@@ -105,6 +105,11 @@
   max-width: 100%;
   padding: 0 1rem;
 }
+/* Add this new class for the transfer link */
+.transferLink {
+  @apply text-blue-600 hover:text-blue-800 cursor-pointer;
+  transition: color 0.2s ease-in-out;
+}
 
 .button:disabled {
   @apply opacity-50 cursor-not-allowed;
@@ -119,7 +124,6 @@
 }
 
 .recipientAddress {
-  font-weight: bold;
   display: inline-block;
   max-width: 100%;
   overflow-wrap: break-word;
