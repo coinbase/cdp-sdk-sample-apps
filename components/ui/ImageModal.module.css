@@ -1,0 +1,130 @@
+.overlay {
+  @apply fixed inset-0 bg-black flex justify-center items-center z-50;
+  transition: opacity 500ms ease-in-out;
+}
+
+.overlayVisible {
+  @apply bg-opacity-50;
+}
+
+.overlayHidden {
+  @apply bg-opacity-0 pointer-events-none;
+}
+
+.overlayMinting {
+  cursor: not-allowed;
+}
+
+.modal {
+  @apply bg-white rounded-lg p-6 w-96 max-w-full flex flex-col items-center;
+  transition: all 500ms ease-in-out;
+}
+
+.modalVisible {
+  @apply opacity-100 scale-100 translate-y-0;
+}
+
+.modalHidden {
+  @apply opacity-0 scale-95 translate-y-4;
+}
+
+.title {
+  @apply text-2xl font-bold mb-6 text-center;
+}
+
+.imageContainer {
+  @apply mb-6 flex justify-center;
+}
+
+.image {
+  transition: all 700ms ease-in-out;
+}
+
+.imageLoaded {
+  @apply opacity-100 scale-100;
+}
+
+.imageLoading {
+  @apply opacity-0 scale-95;
+}
+
+.buttonContainer {
+  @apply flex justify-center w-full;
+}
+
+.buttonContainerWithTwoButtons {
+  @apply space-x-4;
+}
+
+.button {
+  @apply text-white px-6 py-2 rounded-full transition-colors duration-200 flex-grow;
+}
+
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.transferContainer {
+  @apply flex flex-col w-full items-center;
+}
+
+.input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.transferComplete {
+  margin-top: 1rem;
+  text-align: center;
+  word-break: break-all;
+  max-width: 100%;
+  padding: 0 1rem;
+}
+/* Add this new class for the transfer link */
+.transferLink {
+  @apply text-blue-600 hover:text-blue-800 cursor-pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.divider {
+  @apply w-full h-px bg-gray-300 my-2;
+}
+
+.button + .divider {
+  @apply mt-4;
+}
+
+.recipientAddress {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}

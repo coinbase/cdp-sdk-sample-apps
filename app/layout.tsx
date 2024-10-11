@@ -44,7 +44,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={inter.className}>
-        <div className="min-h-screen bg-white text-gray-800">
+        <div className="min-h-screen bg-white text-gray-800 w-full max-w-5xl mx-auto">
           <header className="py-6 px-4 bg-white shadow-md">
             <nav className="container mx-auto flex justify-between items-center">
               <Link href="/">
@@ -76,7 +76,7 @@ export default function RootLayout({
             <p>&copy; 2024 CDP SDK. All rights reserved.</p>
             <p>
               By using this app, you agree to the{' '}
-              <a 
+              <a
                 href="https://www.coinbase.com/legal/cloud/terms-of-service"
                 target="_blank"
                 rel="noopener noreferrer"

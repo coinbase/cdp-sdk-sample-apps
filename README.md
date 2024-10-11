@@ -10,7 +10,8 @@ The project contains the following demo applications built with CDP SDK
 2. **Onchain AI**: The Onchain AI template provides a simple app for Reinforcement Learning from Human Feedback using the CDP SDK.
 3. **Trading bot**: Discover automated trading strategies implemented with CDP SDK on Telegram.
 4. **Mass Payouts demo**: Automate mass payouts in crypto with zero gas fee with Transfers API on CDP SDK.
-
+5. **Instamint**: Mint AI-generated images onchain
+6. **Wallet Command Center**: Manage your MPC wallets
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

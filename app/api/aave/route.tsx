@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { baseSepolia } from 'viem/chains';
 import aaveAbi from './aave_v3_abi.json';
 import usdcAbi from './usdc_abi.json';
+import { importWallet } from '@/lib/coinbase';
 
 import {
     createPublicClient,
@@ -10,7 +11,6 @@ import {
     parseUnits,
     formatUnits
 } from 'viem';
-import {Coinbase, Wallet} from "@coinbase/coinbase-sdk";
 
 const AAVE_POOL_ADDRESS = '0x07eA79F68B2B3df564D0A34F8e19D9B1e339814b';
 const USDC_ADDRESS = '0x036CbD53842c5426634e7929541eC2318f3dCF7e';
@@ -263,13 +263,13 @@ export async function POST(request: Request) {
 
             console.log('USDC repaid to Aave:', repayTx);
 
-            return NextResponse.json({success: true, txHash: repayTx.getTransactionHash()});
+            return NextResponse.json({ success: true, txHash: repayTx.getTransactionHash() });
         } catch (error) {
             console.error('Failed to repay loan:', error);
             return NextResponse.json({
                 error: 'Failed to repay loan',
                 details: error instanceof Error ? error.message : String(error)
-            }, {status: 500});
+            }, { status: 500 });
         }
     }
 
@@ -312,58 +312,4 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
-}
-
-// importWallet imports the CDP wallet from the environment variables.
-async function importWallet(): Promise<Wallet>{
-    const { CDP_API_KEY_NAME, CDP_API_KEY_PRIVATE_KEY, WALLET_DATA } = process.env;
-
-    const apiKeyString = CDP_API_KEY_PRIVATE_KEY as string;
-
-    Coinbase.configure({
-        apiKeyName: CDP_API_KEY_NAME as string,
-        privateKey: apiKeyString.replaceAll("\\n", "\n") as string,
-    });
-
-    try {
-        // Parse the wallet data
-        const seedData = JSON.parse(WALLET_DATA || "{}");
-
-        if (Object.keys(seedData).length === 0) {
-            // Create a new wallet if WALLET_DATA is empty
-            const newWallet = await Wallet.create();
-
-            // Fund the wallet with USDC
-            let faucetTransaction = await newWallet.faucet(Coinbase.assets.Usdc);
-            console.log(`Faucet transaction for USDC: ${faucetTransaction}`);
-
-            // Fund the wallet with ETH.
-            faucetTransaction = await newWallet.faucet();
-            console.log(`Faucet transaction for ETH: ${faucetTransaction}`);
-
-            let exportData = await newWallet.export()
-
-            // Create and assign the new WALLET_DATA
-            const newWalletData =JSON.stringify({ [exportData['walletId'] as string]: { 'seed': exportData['seed'] as string } });
-
-            console.log(`Created new wallet: ${exportData['walletId']}`)
-
-            process.env.WALLET_DATA = newWalletData;
-
-            return newWallet;
-        }
-
-        // Get the wallet id
-        const walletId = Object.keys(seedData)[0];
-
-
-        // Get the seed of the wallet
-        const seed = seedData[walletId]?.seed;
-
-        // Import the wallet
-        return Wallet.import({ seed, walletId });
-    } catch (e) {
-        console.log('Failed to import wallet:', e);
-        throw e;
-    }
 }
