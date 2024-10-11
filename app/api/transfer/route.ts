@@ -1,5 +1,5 @@
 import { importWallet } from '@/lib/coinbase';
-import '@/lib/server/coinbase';
+import '@/lib/coinbase';
 import { NextResponse } from 'next/server';
 
 export type TransferResponse = {

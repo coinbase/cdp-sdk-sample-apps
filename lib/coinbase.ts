@@ -22,6 +22,7 @@ Coinbase.configure({
  * @returns The imported or created wallet.
  */
 export async function importWallet(minEthBalance: number = 0, minUsdcBalance: number = 0): Promise<Wallet> {
+  console.log(`Importing wallet with minimum ETH balance: ${minEthBalance}, minimum USDC balance: ${minUsdcBalance}`);
   const { WALLET_DATA } = process.env;
 
   let wallet: Wallet;
@@ -29,8 +30,10 @@ export async function importWallet(minEthBalance: number = 0, minUsdcBalance: nu
   try {
     // Parse the wallet data
     const seedData = JSON.parse(WALLET_DATA || "{}");
+    console.log(`Parsed wallet data. Found ${Object.keys(seedData).length} wallet(s)`);
 
     if (Object.keys(seedData).length === 0) {
+      console.log('No existing wallet found. Creating a new wallet...');
       // Create a new wallet if WALLET_DATA is empty
       wallet = await Wallet.create();
 
@@ -41,10 +44,13 @@ export async function importWallet(minEthBalance: number = 0, minUsdcBalance: nu
 
       console.log(`Created new wallet: ${exportData['walletId']}`)
 
+      console.log(`New WALLET_DATA: ${newWalletData}`);
+
       process.env.WALLET_DATA = newWalletData;
 
       return wallet;
     } else {
+      console.log('Existing wallet found. Importing...');
       // Get the wallet id
       const walletId = Object.keys(seedData)[0];
 
@@ -52,22 +58,34 @@ export async function importWallet(minEthBalance: number = 0, minUsdcBalance: nu
       const seed = seedData[walletId]?.seed;
 
       wallet = await Wallet.import({ seed, walletId });
+      console.log(`Imported existing wallet with ID: ${walletId}`);
     }
+
+    console.log(`Wallet address: ${await wallet.getDefaultAddress()}`);
 
     // Maybe fund the wallet with USDC
     const currentUsdcBalance = await wallet.getBalance(Coinbase.assets.Usdc);
+    console.log(`Current USDC balance: ${currentUsdcBalance}`);
     if (currentUsdcBalance.lessThan(minUsdcBalance)) {
+      console.log(`USDC balance below minimum. Funding wallet with USDC...`);
       let faucetTransaction = await wallet.faucet(Coinbase.assets.Usdc);
       console.log(`Faucet transaction for USDC: ${faucetTransaction}`);
+    } else {
+      console.log('USDC balance sufficient. No funding needed.');
     }
 
     // Maybe fund the wallet with ETH.
     const currentEthBalance = await wallet.getBalance(Coinbase.assets.Eth);
+    console.log(`Current ETH balance: ${currentEthBalance}`);
     if (currentEthBalance.lessThan(minEthBalance)) {
+      console.log(`ETH balance below minimum. Funding wallet with ETH...`);
       let faucetTransaction = await wallet.faucet();
       console.log(`Faucet transaction for ETH: ${faucetTransaction}`);
+    } else {
+      console.log('ETH balance sufficient. No funding needed.');
     }
 
+    console.log('Wallet import and funding process completed successfully.');
     return wallet;
   } catch (e) {
     console.log('Failed to import wallet:', e);

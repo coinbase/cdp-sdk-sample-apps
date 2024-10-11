@@ -1,5 +1,5 @@
 import { importWallet } from '@/lib/coinbase';
-import '@/lib/server/coinbase';
+import '@/lib/coinbase';
 import { NextResponse } from 'next/server';
 
 export type MintResponse = {
@@ -45,6 +45,7 @@ export async function POST(request: Request) {
     console.log('Minting NFTs');
     const defaultAddress = await wallet.getDefaultAddress();
     console.log(`Minting to address: ${defaultAddress.getId()}`);
+    console.log(`NFT Contract Address: ${process.env.NFT_CONTRACT_ADDRESS}`);
     const mintTx = await wallet.invokeContract({
       contractAddress: process.env.NFT_CONTRACT_ADDRESS || "",
       method: "mint",
