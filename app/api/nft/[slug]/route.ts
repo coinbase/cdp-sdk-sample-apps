@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { chipOptions } from '@/data/chipOptions';
 import { headers } from 'next/headers';
 
+// Endpoint for the NFT metadata.
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } }
