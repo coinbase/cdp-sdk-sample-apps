@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaGithub, FaDiscord, FaLightbulb } from 'react-icons/fa'
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -87,6 +88,7 @@ export default function RootLayout({
             </p>
           </footer>
         </div>
+        <Analytics />
       </body>
     </html>
   )
