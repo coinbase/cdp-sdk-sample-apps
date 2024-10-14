@@ -54,7 +54,7 @@ export default function Home() {
               name: 'Instamint',
               route: '/instamint',
               description: 'Mint AI-generated images onchain',
-              buildLink: 'https://github.com/coinbase/cdp-sdk-sample-apps/tree/main/app/instamint'
+              buildLink: 'https://github.com/coinbase/cdp-sdk-sample-apps/tree/master/app/instamint'
             },
             {
               name: 'USDC Payments App',
