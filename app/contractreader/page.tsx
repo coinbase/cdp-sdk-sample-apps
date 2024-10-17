@@ -119,65 +119,107 @@ export default function Home() {
   }
 
   return (
-    <main className="p-8">
-      <h1 className="text-3xl font-bold mb-4">Contract Reader</h1>
-      <div className="mb-4">
-        <label className="block mb-2">Contract Address:</label>
-        <input
-          type="text"
-          value={contractAddress}
-          onChange={handleAddressChange}
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2">ABI (JSON format):</label>
-        <textarea
-          value={abiInput}
-          onChange={handleAbiChange}
-          className="w-full p-2 border rounded font-mono text-sm"
-          rows={10}
-          placeholder="Paste your ABI JSON here"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2">Method:</label>
-        <select
-          value={selectedMethod}
-          onChange={handleMethodChange}
-          className="w-full p-2 border rounded"
-        >
-          {methods.map(method => (
-            <option key={method} value={method}>{method}</option>
-          ))}
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2">Arguments (JSON format):</label>
-        <textarea
-          value={argsInput}
-          onChange={handleArgsChange}
-          className="w-full p-2 border rounded font-mono text-sm"
-          rows={5}
-          placeholder='{"arg1": "value1", "arg2": "value2"}'
-        />
-      </div>
-      {error && <div className="text-red-500 mb-4">{error}</div>}
-      <button
-        onClick={callFunction}
-        disabled={isLoading}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300"
-      >
-        {isLoading ? 'Calling...' : 'Call Function'}
-      </button>
-      {output && (
-        <div className="mt-4">
-          <h2 className="text-xl font-bold mb-2">Output:</h2>
-          <pre className="p-4 bg-gray-100 rounded overflow-x-auto">
-            {output}
-          </pre>
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            Contract Reader
+          </h1>
+          <p className="mt-3 text-xl text-gray-500 sm:mt-4">
+            Supports all contracts deployed on Base Sepolia
+          </p>
         </div>
-      )}
-    </main>
+        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div className="px-4 py-5 sm:p-6">
+            <div className="space-y-6">
+              <div>
+                <label htmlFor="contract-address" className="block text-sm font-medium text-gray-700">
+                  Contract Address
+                </label>
+                <input
+                  type="text"
+                  id="contract-address"
+                  value={contractAddress}
+                  onChange={handleAddressChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label htmlFor="abi" className="block text-sm font-medium text-gray-700">
+                  ABI (JSON format)
+                </label>
+                <textarea
+                  id="abi"
+                  rows={5}
+                  value={abiInput}
+                  onChange={handleAbiChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-mono"
+                  placeholder="Paste your ABI JSON here"
+                />
+              </div>
+              <div>
+                <label htmlFor="method" className="block text-sm font-medium text-gray-700">
+                  Method
+                </label>
+                <select
+                  id="method"
+                  value={selectedMethod}
+                  onChange={handleMethodChange}
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md bg-gray-100"
+                >
+                  {methods.length === 0 ? (
+                    <option value="">No methods available</option>
+                  ) : (
+                    <>
+                      <option value="">Select a method</option>
+                      {methods.map(method => (
+                        <option key={method} value={method}>{method}</option>
+                      ))}
+                    </>
+                  )}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="arguments" className="block text-sm font-medium text-gray-700">
+                  Arguments (JSON format)
+                </label>
+                <textarea
+                  id="arguments"
+                  rows={3}
+                  value={argsInput}
+                  onChange={handleArgsChange}
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-mono"
+                  placeholder='{"arg1": "value1", "arg2": "value2"}'
+                />
+              </div>
+            </div>
+            {error && (
+              <div className="mt-4 text-sm text-red-600">
+                {error}
+              </div>
+            )}
+            <div className="mt-6">
+              <button
+                onClick={callFunction}
+                disabled={isLoading}
+                className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
+              >
+                {isLoading ? 'Calling...' : 'Call Function'}
+              </button>
+            </div>
+          </div>
+        </div>
+        {output && (
+          <div className="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+            <div className="px-4 py-5 sm:p-6">
+              <h2 className="text-lg leading-6 font-medium text-gray-900 mb-4">Output</h2>
+              <pre className="mt-2 p-4 bg-gray-50 rounded-md overflow-x-auto text-sm">
+                {output}
+              </pre>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
