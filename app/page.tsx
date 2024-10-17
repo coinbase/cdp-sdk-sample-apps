@@ -45,6 +45,12 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
           {[
             {
+              name: 'Contract Reader',
+              route: '/contractreader',
+              description: 'Contract Reader to read data from any contract',
+              buildLink: ''
+            },
+            {
               name: 'Wallet Command Center',
               route: 'https://www.walletcommandcenter.com/',
               description: 'Wallet Command center to manage your MPC wallets',

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const defaultAbi = [
   {
@@ -12,14 +12,52 @@ const defaultAbi = [
   }
 ]
 
+interface AbiItem {
+  type: string;
+  name: string;
+  inputs: { name: string; type: string }[];
+  stateMutability: string;
+}
+
 export default function Home() {
   const [contractAddress, setContractAddress] = useState('0x0B54409D1B1dd1438eDF7729CDAea3E331Ae12ED')
   const [abiInput, setAbiInput] = useState(JSON.stringify(defaultAbi, null, 2))
-  const [method, setMethod] = useState('pureUint16')
+  const [parsedAbi, setParsedAbi] = useState<AbiItem[]>(defaultAbi as AbiItem[])
+  const [methods, setMethods] = useState<string[]>([])
+  const [selectedMethod, setSelectedMethod] = useState('')
   const [argsInput, setArgsInput] = useState('{}')
   const [output, setOutput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    try {
+      const parsed = JSON.parse(abiInput) as AbiItem[]
+      setParsedAbi(parsed)
+      const viewFunctions = parsed.filter(item => 
+        item.type === 'function' && 
+        (item.stateMutability === 'view' || item.stateMutability === 'pure')
+      )
+      const methodNames = viewFunctions.map(item => item.name)
+      setMethods(methodNames)
+      setSelectedMethod(methodNames[0] || '')
+    } catch (e) {
+      setError('Invalid ABI JSON')
+    }
+  }, [abiInput])
+
+  useEffect(() => {
+    if (selectedMethod) {
+      const selectedFunction = parsedAbi.find(item => item.name === selectedMethod)
+      if (selectedFunction) {
+        const defaultArgs = selectedFunction.inputs.reduce((acc, input) => {
+          acc[input.name || `arg${Object.keys(acc).length}`] = ''
+          return acc
+        }, {} as Record<string, string>)
+        setArgsInput(JSON.stringify(defaultArgs, null, 2))
+      }
+    }
+  }, [selectedMethod, parsedAbi])
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContractAddress(e.target.value)
@@ -30,8 +68,8 @@ export default function Home() {
     setError('')
   }
 
-  const handleMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMethod(e.target.value)
+  const handleMethodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedMethod(e.target.value)
   }
 
   const handleArgsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -43,14 +81,7 @@ export default function Home() {
     setIsLoading(true)
     setError('')
     try {
-      let parsedAbi
       let parsedArgs
-
-      try {
-        parsedAbi = JSON.parse(abiInput)
-      } catch (e) {
-        throw new Error('Invalid ABI JSON')
-      }
 
       try {
         parsedArgs = JSON.parse(argsInput)
@@ -66,7 +97,7 @@ export default function Home() {
         body: JSON.stringify({
           contractAddress,
           abi: parsedAbi,
-          method,
+          method: selectedMethod,
           args: parsedArgs,
         }),
       })
@@ -111,20 +142,23 @@ export default function Home() {
       </div>
       <div className="mb-4">
         <label className="block mb-2">Method:</label>
-        <input
-          type="text"
-          value={method}
+        <select
+          value={selectedMethod}
           onChange={handleMethodChange}
           className="w-full p-2 border rounded"
-        />
+        >
+          {methods.map(method => (
+            <option key={method} value={method}>{method}</option>
+          ))}
+        </select>
       </div>
       <div className="mb-4">
         <label className="block mb-2">Arguments (JSON format):</label>
         <textarea
           value={argsInput}
           onChange={handleArgsChange}
-          className="w-full p-2 border rounded"
-          rows={3}
+          className="w-full p-2 border rounded font-mono text-sm"
+          rows={5}
           placeholder='{"arg1": "value1", "arg2": "value2"}'
         />
       </div>
