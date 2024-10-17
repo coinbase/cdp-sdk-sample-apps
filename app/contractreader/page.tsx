@@ -2,47 +2,62 @@
 
 import { useState } from 'react'
 
+const defaultAbi = [
+  {
+    "type": "function",
+    "name": "pureUint16",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint16", "internalType": "uint16" }],
+    "stateMutability": "pure"
+  }
+]
+
 export default function Home() {
-  const [contractAddress, setContractAddress] = useState('')
-  const [abi, setAbi] = useState('')
-  const [method, setMethod] = useState('')
-  const [args, setArgs] = useState<{[key: string]: string}>({})
-  const [newArgKey, setNewArgKey] = useState('')
-  const [newArgValue, setNewArgValue] = useState('')
+  const [contractAddress, setContractAddress] = useState('0x0B54409D1B1dd1438eDF7729CDAea3E331Ae12ED')
+  const [abiInput, setAbiInput] = useState(JSON.stringify(defaultAbi, null, 2))
+  const [method, setMethod] = useState('pureUint16')
+  const [argsInput, setArgsInput] = useState('{}')
   const [output, setOutput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContractAddress(e.target.value)
   }
 
   const handleAbiChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setAbi(e.target.value)
+    setAbiInput(e.target.value)
+    setError('')
   }
 
   const handleMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMethod(e.target.value)
   }
 
-  const handleAddArg = () => {
-    if (newArgKey && newArgValue) {
-      setArgs(prev => ({ ...prev, [newArgKey]: newArgValue }))
-      setNewArgKey('')
-      setNewArgValue('')
-    }
-  }
-
-  const handleRemoveArg = (key: string) => {
-    setArgs(prev => {
-      const newArgs = { ...prev }
-      delete newArgs[key]
-      return newArgs
-    })
+  const handleArgsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setArgsInput(e.target.value)
+    setError('')
   }
 
   const callFunction = async () => {
     setIsLoading(true)
+    setError('')
     try {
+      let parsedAbi
+      let parsedArgs
+
+      try {
+        parsedAbi = JSON.parse(abiInput)
+      } catch (e) {
+        throw new Error('Invalid ABI JSON')
+      }
+
+      try {
+        parsedArgs = JSON.parse(argsInput)
+      } catch (e) {
+        throw new Error('Invalid Arguments JSON')
+      }
+
       const response = await fetch('/api/contractreader', {
         method: 'POST',
         headers: {
@@ -50,21 +65,23 @@ export default function Home() {
         },
         body: JSON.stringify({
           contractAddress,
-          abi,  
+          abi: parsedAbi,
           method,
-          args,
+          args: parsedArgs,
         }),
       })
 
       if (!response.ok) {
-        throw new Error('Failed to call contract')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to call contract')
       }
 
       const data = await response.json()
       setOutput(JSON.stringify(data.result, null, 2))
     } catch (error) {
       console.error(error)
-      setOutput('Error: ' + (error as Error).message)
+      setError((error as Error).message)
+      setOutput('')
     } finally {
       setIsLoading(false)
     }
@@ -85,10 +102,10 @@ export default function Home() {
       <div className="mb-4">
         <label className="block mb-2">ABI (JSON format):</label>
         <textarea
-          value={abi}
+          value={abiInput}
           onChange={handleAbiChange}
-          className="w-full p-2 border rounded"
-          rows={5}
+          className="w-full p-2 border rounded font-mono text-sm"
+          rows={10}
           placeholder="Paste your ABI JSON here"
         />
       </div>
@@ -102,52 +119,16 @@ export default function Home() {
         />
       </div>
       <div className="mb-4">
-        <label className="block mb-2">Arguments:</label>
-        {Object.entries(args).map(([key, value]) => (
-          <div key={key} className="flex mb-2">
-            <input
-              type="text"
-              value={key}
-              readOnly
-              className="w-1/3 p-2 border rounded-l"
-            />
-            <input
-              type="text"
-              value={value}
-              readOnly
-              className="w-1/3 p-2 border-t border-b"
-            />
-            <button
-              onClick={() => handleRemoveArg(key)}
-              className="w-1/3 p-2 bg-red-500 text-white rounded-r"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <div className="flex mb-2">
-          <input
-            type="text"
-            value={newArgKey}
-            onChange={(e) => setNewArgKey(e.target.value)}
-            placeholder="Key"
-            className="w-1/3 p-2 border rounded-l"
-          />
-          <input
-            type="text"
-            value={newArgValue}
-            onChange={(e) => setNewArgValue(e.target.value)}
-            placeholder="Value"
-            className="w-1/3 p-2 border-t border-b"
-          />
-          <button
-            onClick={handleAddArg}
-            className="w-1/3 p-2 bg-green-500 text-white rounded-r"
-          >
-            Add Argument
-          </button>
-        </div>
+        <label className="block mb-2">Arguments (JSON format):</label>
+        <textarea
+          value={argsInput}
+          onChange={handleArgsChange}
+          className="w-full p-2 border rounded"
+          rows={3}
+          placeholder='{"arg1": "value1", "arg2": "value2"}'
+        />
       </div>
+      {error && <div className="text-red-500 mb-4">{error}</div>}
       <button
         onClick={callFunction}
         disabled={isLoading}

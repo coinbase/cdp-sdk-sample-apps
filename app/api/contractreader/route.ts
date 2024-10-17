@@ -8,6 +8,10 @@ export async function POST(req: NextRequest) {
 
     console.log(abi)
 
+    console.log(contractAddress)
+    console.log(method)
+    console.log(args)
+
     const result = await readContract({
       networkId: "base-sepolia",
       abi: abi,
@@ -16,11 +20,15 @@ export async function POST(req: NextRequest) {
       args: args,
     });
 
-    console.log(result)
-    return NextResponse.json({ result });
+    // If the result is a BigInt, convert it to a string
+    const resultStr = typeof result === 'bigint' ? result.toString() : result;
+
+    return NextResponse.json({ result: resultStr }, { 
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Error reading contract:', error);
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }
-
