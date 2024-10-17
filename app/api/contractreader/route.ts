@@ -6,12 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     const { contractAddress, abi, method, args } = await req.json();
 
-    console.log(abi)
-
-    console.log(contractAddress)
-    console.log(method)
-    console.log(args)
-
     const result = await readContract({
       networkId: "base-sepolia",
       abi: abi,
