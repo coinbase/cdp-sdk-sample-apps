@@ -47,7 +47,7 @@ export default function Home() {
             {
               name: 'Contract Reader',
               route: '/contractreader',
-              description: 'Contract Reader to read data from any contract deployed on Base Sepolia',
+              description: 'Contract Reader to read data from any contract deployed on Base network',
               buildLink: ''
             },
             {

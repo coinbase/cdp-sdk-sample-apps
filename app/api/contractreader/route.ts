@@ -4,10 +4,10 @@ import { readContract } from '@coinbase/coinbase-sdk';
 
 export async function POST(req: NextRequest) {
   try {
-    const { contractAddress, abi, method, args } = await req.json();
+    const { contractAddress, abi, method, args, network } = await req.json();
 
     const result = await readContract({
-      networkId: "base-sepolia",
+      networkId: network,
       abi: abi,
       contractAddress: contractAddress as `0x${string}`,
       method: method,

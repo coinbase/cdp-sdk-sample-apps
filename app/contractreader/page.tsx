@@ -12,6 +12,7 @@ const defaultAbi = [
   }
 ]
 
+
 interface AbiItem {
   type: string;
   name: string;
@@ -29,6 +30,7 @@ export default function Home() {
   const [output, setOutput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [network, setNetwork] = useState('base-sepolia')
 
   useEffect(() => {
     try {
@@ -58,6 +60,22 @@ export default function Home() {
       }
     }
   }, [selectedMethod, parsedAbi])
+
+  const resetFields = () => {
+    setContractAddress('')
+    setAbiInput(JSON.stringify({}, null, 2))
+    setParsedAbi(defaultAbi as AbiItem[])
+    setMethods([])
+    setSelectedMethod('')
+    setArgsInput('{}')
+    setOutput('')
+    setError('')
+  }
+
+  const handleNetworkChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setNetwork(e.target.value)
+    resetFields()
+  }
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContractAddress(e.target.value)
@@ -99,6 +117,7 @@ export default function Home() {
           abi: parsedAbi,
           method: selectedMethod,
           args: parsedArgs,
+          network,
         }),
       })
 
@@ -126,12 +145,26 @@ export default function Home() {
             Contract Reader
           </h1>
           <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-            Supports all contracts deployed on Base Sepolia
+            Supports Base Sepolia and Base Mainnet
           </p>
         </div>
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <div className="space-y-6">
+              <div>
+                <label htmlFor="network" className="block text-sm font-medium text-gray-700">
+                  Network
+                </label>
+                <select
+                  id="network"
+                  value={network}
+                  onChange={handleNetworkChange}
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md bg-gray-100"
+                >
+                  <option value="base-sepolia">Base Sepolia</option>
+                  <option value="base-mainnet">Base Mainnet</option>
+                </select>
+              </div>
               <div>
                 <label htmlFor="contract-address" className="block text-sm font-medium text-gray-700">
                   Contract Address
@@ -141,7 +174,7 @@ export default function Home() {
                   id="contract-address"
                   value={contractAddress}
                   onChange={handleAddressChange}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-gray-100"
                 />
               </div>
               <div>
