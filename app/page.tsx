@@ -29,15 +29,15 @@ export default function Home() {
             </li>
             <li className="flex items-center text-gray-700">
               <FaDatabase className="mr-3 text-blue-500" />
-              <span>Accessing onchain data and using testnet faucets</span>
+              <span>Access onchain data and using testnet faucets</span>
             </li>
             <li className="flex items-center text-gray-700">
               <FaExchangeAlt className="mr-3 text-blue-500" />
-              <span>Leveraging crypto functions like send, receive, trade, stake</span>
+              <span>Leverage crypto verbs like send, receive, trade, stake</span>
             </li>
             <li className="flex items-center text-gray-700">
               <FaLaptopCode className="mr-3 text-blue-500" />
-              <span>Seamless onchain interactions from your developer wallets</span>
+              <span>Read, write and deploy smart contracts with ease</span>
             </li>
           </ul>
         </div>
