@@ -14,8 +14,13 @@ export async function POST(req: NextRequest) {
       args: args,
     });
 
-    // If the result is a BigInt, convert it to a string
-    const resultStr = typeof result === 'bigint' ? result.toString() : result;
+    console.log('result', result);
+    const resultStr = JSON.stringify(result, (key, value) => {
+      if (typeof value === "bigint") {
+        return value.toString();
+      }
+      return value;
+    });
 
     return NextResponse.json({ result: resultStr }, { 
       status: 200,

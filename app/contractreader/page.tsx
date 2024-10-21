@@ -34,19 +34,23 @@ export default function Home() {
 
   useEffect(() => {
     try {
-      const parsed = JSON.parse(abiInput) as AbiItem[]
-      setParsedAbi(parsed)
+      let abiToProcess = abiInput.trim();
+      if (!abiToProcess.startsWith('[') || !abiToProcess.endsWith(']')) {
+        throw new Error('ABI must be an array enclosed in square brackets []');
+      }
+      const parsed = JSON.parse(abiToProcess) as AbiItem[];
+      setParsedAbi(parsed);
       const viewFunctions = parsed.filter(item => 
         item.type === 'function' && 
         (item.stateMutability === 'view' || item.stateMutability === 'pure')
-      )
-      const methodNames = viewFunctions.map(item => item.name)
-      setMethods(methodNames)
-      setSelectedMethod(methodNames[0] || '')
+      );
+      const methodNames = viewFunctions.map(item => item.name);
+      setMethods(methodNames);
+      setSelectedMethod(methodNames[0] || '');
     } catch (e) {
-      setError('Invalid ABI JSON')
+      setError(`Invalid ABI JSON: ${(e as Error).message}`);
     }
-  }, [abiInput])
+  }, [abiInput]);
 
   useEffect(() => {
     if (selectedMethod) {
