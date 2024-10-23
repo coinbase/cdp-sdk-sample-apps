@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       return value;
     });
 
-    return NextResponse.json({ result: resultStr }, { 
+    return NextResponse.json({ result: JSON.parse(resultStr) }, { 
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
