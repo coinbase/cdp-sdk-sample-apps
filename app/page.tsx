@@ -45,16 +45,22 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
           {[
             {
-              name: 'Contract Reader',
-              route: '/contractreader',
-              description: 'Contract Reader to read data from any contract deployed on Base network',
-              buildLink: ''
+              name: 'USDC Rewards App',
+              route: '/blockleads',
+              description: 'Automatically rewards users with free $USDC in return for providing their crypto wallet and email addresses.',
+              buildLink: 'https://github.com/HeimLabs/coinbase-blockleads-frontend'
             },
             {
               name: 'Wallet Command Center',
               route: 'https://www.walletcommandcenter.com/',
               description: 'Wallet Command center to manage your MPC wallets',
               buildLink: 'https://vercel.com/templates/next.js/wallet-dashboard-with-coinbase-developer-platform'
+            },
+            {
+              name: 'Automated Payouts',
+              route: 'https://masspayoutsdemo.com/',
+              description: 'Automate mass payments for free on Base with Transfer APIs on CDP SDK.',
+              buildLink: 'https://replit.com/@CoinbaseDev/Onchain-Payments?v=1#README.md'
             },
             {
               name: 'Instamint',
@@ -87,10 +93,10 @@ export default function Home() {
               buildLink: 'https://replit.com/@CoinbaseDev/Onchain-Trading-Bot#README.md'
             },
             {
-              name: 'Automated Payouts',
-              route: 'https://masspayoutsdemo.com/',
-              description: 'Automate mass payments for free on Base with Transfer APIs on CDP SDK.',
-              buildLink: 'https://replit.com/@CoinbaseDev/Onchain-Payments?v=1#README.md'
+              name: 'Contract Reader',
+              route: '/contractreader',
+              description: 'Contract Reader to read data from any contract deployed on Base network',
+              buildLink: ''
             }
           ].map((app, index) => (
             <div key={index} className="bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-lavender-200 flex flex-col h-full">

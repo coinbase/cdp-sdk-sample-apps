@@ -1,11 +1,15 @@
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaGithub, FaDiscord, FaLightbulb } from 'react-icons/fa'
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({ 
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'CDP SDK Demo Apps',
@@ -44,7 +48,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <div className="min-h-screen bg-white text-gray-800 w-full max-w-5xl mx-auto">
           <header className="py-6 px-4 bg-white shadow-md">
             <nav className="container mx-auto flex justify-between items-center">
