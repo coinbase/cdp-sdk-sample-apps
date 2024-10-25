@@ -19,7 +19,7 @@ export default function BlockLeads() {
             </div>
 
             <p className="text-xl font-light text-gray-700 mb-12 leading-relaxed">
-              BlockLeads is an app on Base Sepolia that automatically rewards users with free $USDC in return for providing their crypto wallet and email addresses.
+              BlockLeads is an app on Base Sepolia that automatically rewards users with free $USDC in return for providing their crypto wallet address.
             </p>
 
             <div className="bg-white bg-opacity-50 rounded-lg p-8 mb-12 shadow-inner">
