@@ -26,7 +26,7 @@ export default function BlockLeads() {
               <h2 className="text-3xl font-semibold text-gray-800 mb-6">How it works</h2>
               <ol className="list-decimal list-inside space-y-4 text-gray-700">
                 <li className="text-lg">User enters name, email, and wallet address (currently configured to support Base).</li>
-                <li className="text-lg">User clicks on "Claim USDC"</li>
+                <li className="text-lg">User clicks on `Claim USDC`</li>
                 <li className="text-lg">User instantly receives $0.25 reward of USDC on Base Sepolia (testnet) into the wallet address provided.</li>
               </ol>
               <p className="mt-6 text-sm font-light text-gray-600">
