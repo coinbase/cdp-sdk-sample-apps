@@ -97,5 +97,6 @@ export const chipOptions = [
   "Bioluminescent Mangrove",
   "Astral Time Lapse",
   "Cybernetic Coral Reef",
-  "Galactic Dreamcatcher"
+  "Galactic Dreamcatcher",
+  "CDP @Devcon"
 ];

@@ -7,7 +7,8 @@ import Modal from './ImageModal';
 
 // Move this outside of the component
 const getRandomChips = () => {
-  return chipOptions.slice().sort(() => 0.5 - Math.random()).slice(0, 3);
+  const randomChips = chipOptions.slice().sort(() => 0.5 - Math.random()).slice(0, 2);
+  return [...randomChips, "CDP @Devcon"];
 };
 
 const INITIAL_MESSAGE = { text: "Hello! What would you like to mint today?", sender: "bot" as const, id: 0 };

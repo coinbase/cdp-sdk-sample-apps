@@ -41,8 +41,7 @@ export default function Home() {
       const parsed = JSON.parse(abiToProcess) as AbiItem[];
       setParsedAbi(parsed);
       const viewFunctions = parsed.filter(item => 
-        item.type === 'function' && 
-        (item.stateMutability === 'view' || item.stateMutability === 'pure')
+        item.type === 'function' 
       );
       const methodNames = viewFunctions.map(item => item.name);
       setMethods(methodNames);
